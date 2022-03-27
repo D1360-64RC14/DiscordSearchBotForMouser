@@ -18,6 +18,6 @@
     "scripts": {
         "build": "tsc",
         "start": "node build/index.js",
-        "bs": "yarn build; yarn start"
+        "bs": "yarn build && yarn start"
     }
 }

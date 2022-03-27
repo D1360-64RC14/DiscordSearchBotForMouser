@@ -8,20 +8,34 @@ const commands = [
     new SlashCommandBuilder()
         .setName('ping')
         .setDescription(
-            'Replies with pong and delete the message after 5 seconds.',
-        )
-        .toJSON(),
+            'Replies with Pong as a message that only you can see.',
+        ),
     new SlashCommandBuilder()
-        .setName('partnumber')
-        .setDescription('Search by product partnumber')
-        .addStringOption((option) =>
-            option
+        .setName('search')
+        .setDescription('Search products from Mouser')
+        .addSubcommand((sub) =>
+            sub
                 .setName('partnumber')
-                .setDescription('Product partnumber')
-                .setRequired(true),
+                .setDescription('Search products by partnumber')
+                .addStringOption((strOpt) =>
+                    strOpt
+                        .setName('partnumber')
+                        .setDescription('Product partnumber')
+                        .setRequired(true),
+                ),
         )
-        .toJSON(),
-];
+        .addSubcommand((sub) =>
+            sub
+                .setName('keyword')
+                .setDescription('Search products by keyword')
+                .addStringOption((strOpt) =>
+                    strOpt
+                        .setName('keyword')
+                        .setDescription('Search keyword')
+                        .setRequired(true),
+                ),
+        ),
+].map((c) => c.toJSON());
 
 export default function (client: Client) {
     const rest = new REST().setToken(DISCORD_BOT_TOKEN);

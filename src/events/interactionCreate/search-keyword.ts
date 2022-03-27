@@ -1,17 +1,17 @@
 import { Interaction } from 'discord.js';
 import { MOUSER_API_TOKEN } from '../../config/environment';
-import { searchByPatnumber } from '../../MouserApi/v1/SearchApi';
+import { searchByKeyword } from '../../MouserApi/v1/SearchApi';
 
 export default async function (interaction: Interaction) {
     if (!interaction.isCommand()) return;
     if (interaction.commandName !== 'search') return;
-    if (interaction.options.getSubcommand() !== 'partnumber') return;
+    if (interaction.options.getSubcommand() !== 'keyword') return;
 
-    const partnumber = interaction.options.getString('partnumber', true);
+    const keyword = interaction.options.getString('keyword', true);
 
-    const response = await searchByPatnumber({
+    const response = await searchByKeyword({
         apiKey: MOUSER_API_TOKEN,
-        mouserPartNumber: partnumber.trim(),
+        keyword: keyword.trim(),
     });
 
     const text = [];
